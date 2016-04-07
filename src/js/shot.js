@@ -21,8 +21,8 @@ export default class Shot extends Renderable {
   }
 
   on_fixed_update(app, dt) {
-    this.position.x += this.velocity.x * dt;
-    this.position.y += this.velocity.y * dt;
+    this.position.x += this.velocity.x * dt * app.gfx.ratio;
+    this.position.y += this.velocity.y * dt * app.gfx.ratio;
   }
 
   render(app) {
@@ -30,7 +30,7 @@ export default class Shot extends Renderable {
     let ctx = gfx.ctx;
 
     let path = new Path2D();
-    path.arc(this.position.x, this.position.y, 5, 0, Math.PI*2);
+    path.arc(this.position.x, this.position.y, 5 * gfx.ratio, 0, Math.PI*2);
     ctx.fillStyle = this.color;
     ctx.fill(path);
   }

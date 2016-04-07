@@ -13,7 +13,7 @@ export default class Ship extends Renderable {
 
   on_update(app) {
     this.position.x = app.pointer.position.x;
-    this.position.y = app.gfx.height - 75;
+    this.position.y = app.gfx.height - (75 * app.gfx.ratio);
   }
 
   on_fixed_update(app, dt) {
@@ -50,7 +50,10 @@ export default class Ship extends Renderable {
     ctx.lineWidth = 2;
     ctx.save();
     ctx.translate( this.position.x, this.position.y );
+    gfx.scale();
     ctx.stroke(path);
     ctx.restore();
+
+    //gfx.post_scale();
   }
 }

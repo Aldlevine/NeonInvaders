@@ -5,12 +5,24 @@ import Vec2 from "./vec2";
 export default class Pointer extends Evented {
   constructor() {
     super();
-    this.position = new Vec2();
+    this._position = new Vec2();
     this.down_0 = false;
     this.down_1 = false;
 
     this.touch_0 = null;
     this.touch_1 = null;
+
+    let dpr = window.devicePixelRatio || 1;
+    /*let bspr = this.ctx.webkitBackingStorePixelRatio ||
+               this.ctx.mozBackingStorePixelRatio ||
+               this.ctx.msBackingStorePixelRatio ||
+               this.ctx.oBackingStorePixelRatio ||
+               this.ctx.backingStorePixelRatio || 1;*/
+    this.ratio = dpr;
+  }
+
+  get position() {
+    return new Vec2(this._position.x * this.ratio, this._position.y * this.ratio);
   }
 
   register_events() {
@@ -23,8 +35,8 @@ export default class Pointer extends Evented {
         this.down_1 = true;
         this.dispatch('down', 1);
       }
-      this.position.x = ev.pageX;
-      this.position.y = ev.pageY;
+      this._position.x = ev.pageX;
+      this._position.y = ev.pageY;
     });
 
     window.addEventListener('mouseup', ev => {
@@ -39,8 +51,8 @@ export default class Pointer extends Evented {
     });
 
     window.addEventListener('mousemove', ev => {
-      this.position.x = ev.pageX;
-      this.position.y = ev.pageY;
+      this._position.x = ev.pageX;
+      this._position.y = ev.pageY;
       this.dispatch('move');
     });
 
@@ -60,8 +72,8 @@ export default class Pointer extends Evented {
           this.dispatch('down', 1);
         }
       }
-      this.position.x = this.touch_0.pageX;
-      this.position.y = this.touch_0.pageY;
+      this._position.x = this.touch_0.pageX;
+      this._position.y = this.touch_0.pageY;
     });
 
     window.addEventListener('touchend', ev => {
@@ -86,8 +98,8 @@ export default class Pointer extends Evented {
       for( var i=0, ii=touches.length; i<ii; i++ ) {
         if( touches[i].identifier == (this.touch_0||{}).identifier ) {
           this.touch_0 = touches[i];
-          this.position.x = this.touch_0.pageX;
-          this.position.y = this.touch_0.pageY;
+          this._position.x = this.touch_0.pageX;
+          this._position.y = this.touch_0.pageY;
           this.dispatch('move');
         }
         else if( touches[i].identifier == (this.touch_1||{}).identifer ) {

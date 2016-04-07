@@ -1,5 +1,5 @@
 export const DEBUG = true;
-export const FIXED_UPDATE_TIME = (1 / 60) * 1000; // 60fps
+export const FIXED_UPDATE_TIME = (1 / 120) * 1000; // 60fps
 
 export const SHIP_SHOT_SPEED = -0.75;
 export const SHIP_SHOT_INTERVAL = 250;
