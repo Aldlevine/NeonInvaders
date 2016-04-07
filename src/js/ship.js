@@ -17,7 +17,7 @@ export default class Ship extends Renderable {
   }
 
   on_fixed_update(app, dt) {
-    if( app.pointer.down ) {
+    if( app.pointer.down_0 ) {
       if( this.shot_clock == 0 || this.shot_clock >= this.shot_interval ) {
         this.shot_clock -= this.shot_interval;
         if( this.shot_clock < 0 ) this.shot_clock = 0;

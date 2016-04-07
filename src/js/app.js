@@ -15,7 +15,6 @@ export default class App extends Evented {
     this.pointer = new Pointer();
     this.scene = new Gnode();
     this.paused = false;
-    this.touch_0 = null;
 
     if( C.DEBUG ) {
       this.fps = new FPS();
@@ -39,34 +38,7 @@ export default class App extends Evented {
     //  this.resume();
     //});
 
-    window.addEventListener('mousedown', ev => {
-      if( ev.button == 0 ) this.pointer.down = true;
-      this.pointer.position.x = ev.pageX;
-      this.pointer.position.y = ev.pageY;
-    });
-    window.addEventListener('mouseup', ev => {
-      if( ev.button  == 0) this.pointer.down = false;
-    });
-    window.addEventListener('mousemove', ev => {
-      this.pointer.position.x = ev.pageX;
-      this.pointer.position.y = ev.pageY;
-    });
-
-    window.addEventListener('touchstart', ev => {
-      this.touch_0 = ev.touches[0];
-      this.pointer.down = true;
-      this.pointer.position.x = this.touch_0.pageX;
-      this.pointer.position.y = this.touch_0.pageY;
-    });
-    window.addEventListener('touchend', ev => {
-      if( ev.changedTouches[0] == this.touch_0 )
-        this.pointer.down = false;
-    });
-    window.addEventListener('touchmove', ev => {
-      ev.preventDefault();
-      this.pointer.position.x = ev.touches[0].pageX;
-      this.pointer.position.y = ev.touches[0].pageY;
-    });
+   this.pointer.register_events();
 
     this.on('pause', _ => {
       document.documentElement.classList.add('paused');
