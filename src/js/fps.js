@@ -15,7 +15,7 @@ export default class FPS extends Evented{
   }
 
   tic() {
-    if( this.frames < this.min ) this.min = this.frames;
+    if( this.frames < this.min && this.frames > 0 ) this.min = this.frames;
     if( this.frames > this.max ) this.max = this.frames;
     this.dispatch('update', this.frames, this.min, this.max);
     this.frames = 0;

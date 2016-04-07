@@ -31,13 +31,13 @@ export default class App extends Evented {
       this.gfx.set_size();
     });
 
-    window.addEventListener('blur', _ => {
-      this.pause();
-    });
+    //window.addEventListener('blur', _ => {
+    //  this.pause();
+    //});
 
-    window.addEventListener('focus', _ => {
-      this.resume();
-    });
+    //window.addEventListener('focus', _ => {
+    //  this.resume();
+    //});
 
     window.addEventListener('mousedown', ev => {
       if( ev.button == 0 ) this.pointer.down = true;
@@ -110,7 +110,7 @@ export default class App extends Evented {
 
   tic() {
     if( !this.paused ) {
-      requestAnimationFrame(time => {
+      this.frame_request = requestAnimationFrame(time => {
         this.timer.time = time;
         this.tic();
       });

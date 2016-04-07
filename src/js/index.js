@@ -1,3 +1,5 @@
+import "canvas-5-polyfill";
+
 import App from "./app";
 import Ship from "./ship";
 
