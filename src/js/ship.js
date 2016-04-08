@@ -47,7 +47,7 @@ export default class Ship extends Renderable {
 
     let path = new Path2D('M-16 36 L0 28 L16 36 L0 0 Z');
     ctx.strokeStyle = 'hsl(225, 100%, 75%)';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2 / gfx.ratio;
     ctx.save();
     ctx.translate( this.position.x, this.position.y );
     gfx.scale();

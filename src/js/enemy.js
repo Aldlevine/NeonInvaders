@@ -47,7 +47,7 @@ export default class Enemy extends Renderable {
 
     let path = this.path;
     ctx.strokeStyle = this.color;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2 / gfx.ratio;
     ctx.save();
     ctx.translate( this.position.x, this.position.y );
     gfx.scale();
