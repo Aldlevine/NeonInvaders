@@ -4,7 +4,7 @@ import Vec2 from "./vec2";
 import Segment from "./segment";
 
 export default class Poly extends Renderable {
-  constructor(opts = {}) {
+  /*constructor(opts = {}) {
     super();
     this.points = opts.points || [];
     this.position = opts.position || new Vec2();
@@ -16,6 +16,28 @@ export default class Poly extends Renderable {
     this.fill_style = opts.fillStyle || null;
     this.stroke_style = opts.strokeStyle || null;
     this.line_width = opts.lineWidth || 0;
+
+    this.path = new Path2D();
+    this.update_path();
+  }*/
+  constructor({
+    points = [],
+    position = new Vec2(),
+    rotation = 0,
+    scale = 1,
+    fill_style = null,
+    stroke_style = null,
+    line_width = null,
+  } = {}) {
+    super();
+    this.points = points;
+    this.position = position;
+    this.rotation = rotation;
+    this.scale = scale;
+    this.hidpi_scale = window.devicePixelRatio || 1;
+    this.fill_style = fill_style;
+    this.stroke_style = stroke_style;
+    this.line_width;
 
     this.path = new Path2D();
     this.update_path();
