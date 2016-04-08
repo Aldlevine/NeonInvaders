@@ -9,6 +9,9 @@ export default class Poly extends Renderable {
     this.points = opts.points || [];
     this.position = opts.position || new Vec2();
     this.rotation = opts.rotation || 0;
+    this.scale = opts.scale || 1;
+    // TODO: Update to include backing store size
+    this.hidpi_scale = window.devicePixelRatio || 1;
 
     this.fill_style = opts.fillStyle || null;
     this.stroke_style = opts.strokeStyle || null;
@@ -30,11 +33,13 @@ export default class Poly extends Renderable {
   }
 
   get transformed() {
+
     let points = [];
     this.points.forEach( point => {
-      points.push( point.add(this.position) );
+      // TODO: Rotate
+      points.push( point.scale(this.scale * this.hidpi_scale).add(this.position) );
     });
-    // TODO: ROTATE
+
     let poly = new this.constructor(this);
     poly.points = points;
     return poly;
@@ -73,7 +78,8 @@ export default class Poly extends Renderable {
     ctx.fillStyle = this.fill_style;
     ctx.save();
     ctx.translate( this.position.x, this.position.y );
-    gfx.scale();
+    // TODO: Rotate
+    ctx.scale( this.scale * this.hidpi_scale, this.scale * this.hidpi_scale );
     if( this.stroke_style ) ctx.stroke(this.path);
     if( this.fill_style ) ctx.fill(this.path);
     ctx.restore();

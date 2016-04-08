@@ -10,7 +10,7 @@ export default class Shot extends Poly {
     this.fill_style = color || 'hsl(360, 75%, 75%)';
     //this.points = [ new Vec2(0, -7.5), new Vec2(7.5, 0), new Vec2(0, 7.5), new Vec2(-7.5, 0) ];
 
-    let interior_angle = 3*Math.PI/4;
+    let interior_angle = Math.PI / 4;//(Math.PI*8 - Math.PI*2)/16;
     var master_point = new Vec2(Math.cos(Math.PI/8) * 8, Math.sin(Math.PI/8) * 8);
     for( var i=0, ii=8; i<ii; i++ ) {
       this.points.push(master_point.clone());

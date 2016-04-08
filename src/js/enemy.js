@@ -35,7 +35,8 @@ export default class Enemy extends Poly {
     // Collision Stuff
     app.scene.for_each(node => {
       if( node instanceof Shot ) {
-        if( this.intersect(node).length > 0 ) {
+        let ips = this.intersect(node);
+        if( ips.length > 0 ) {
           app.scene.remove_child(node);
           this.hit(10);
         }
