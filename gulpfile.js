@@ -9,17 +9,18 @@ let browserify = require('browserify');
 let babelify = require('babelify');
 let sourcemaps = require('gulp-sourcemaps');
 
-let jade = require('gulp-jade');
+//let jade = require('gulp-jade');
+let pug = require('gulp-pug');
 
 let sass = require('gulp-sass');
 let bourbon = require('node-bourbon');
 
-gulp.task('default', ['es6', 'jade', 'sass']);
+gulp.task('default', ['es6', 'pug', 'sass']);
 
 gulp.task('watch', function(){
   gulp.start('default');
   gulp.watch('src/js/**/*.js', ['es6']);
-  gulp.watch('src/html/**/*.jade', ['jade']);
+  gulp.watch('src/html/**/*.pug', ['pug']);
   gulp.watch('src/css/**/*.scss', ['sass']);
 });
 
@@ -36,9 +37,9 @@ gulp.task('es6-browser', function() {
   ;
 });
 
-gulp.task('jade', function() {
-  gulp.src('src/html/**/*.jade')
-    .pipe(jade())
+gulp.task('pug', function() {
+  gulp.src('src/html/**/*.pug')
+    .pipe(pug())
     .pipe(gulp.dest('www'))
   ;
 });

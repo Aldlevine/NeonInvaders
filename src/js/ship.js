@@ -1,12 +1,17 @@
 import * as C from "./constants";
-import Renderable from "./renderable";
 import Vec2 from "./vec2";
 import Shot from "./shot";
+import Poly from "./poly";
 
-export default class Ship extends Renderable {
+export default class Ship extends Poly {
   constructor() {
     super();
-    this.position = new Vec2();
+    this.line_width = 2;
+    this.stroke_style = "hsl(225, 100%, 75%)";
+    // M-16 36 L0 28 L16 36 L0 0 Z
+    this.points = [new Vec2(-16, 36), new Vec2(0, 28), new Vec2(16, 36), new Vec2(0, 0)];
+    this.update_path();
+
     this.shot_interval = C.SHIP_SHOT_INTERVAL;
     this.shot_clock = 0;
   }
@@ -39,21 +44,5 @@ export default class Ship extends Renderable {
     else {
       this.shot_clock = 0;
     }
-  }
-
-  render(app) {
-    let gfx = app.gfx;
-    let ctx = gfx.ctx;
-
-    let path = new Path2D('M-16 36 L0 28 L16 36 L0 0 Z');
-    ctx.strokeStyle = 'hsl(225, 100%, 75%)';
-    ctx.lineWidth = 2 / gfx.ratio;
-    ctx.save();
-    ctx.translate( this.position.x, this.position.y );
-    gfx.scale();
-    ctx.stroke(path);
-    ctx.restore();
-
-    //gfx.post_scale();
   }
 }
