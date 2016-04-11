@@ -1,5 +1,5 @@
 export const DEBUG = true;
-export const FIXED_UPDATE_TIME = (1 / 120) * 1000; // 120fps
+export const FIXED_UPDATE_TIME = (1 / 120) * 1000; // 60fps
 
 export const EPSILON = Math.pow(2, -52);
 

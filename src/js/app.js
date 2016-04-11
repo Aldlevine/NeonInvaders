@@ -6,6 +6,8 @@ import Pointer from "./pointer";
 import Gnode from "./gnode";
 import FPS from "./fps";
 
+import Poly from "./poly";
+
 export default class App extends Evented {
   constructor() {
     super();
@@ -106,6 +108,23 @@ export default class App extends Evented {
     this.scene.for_each(gnode => {
       gnode.on_update(this, this.timer.dt);
       if( gnode.render ) gnode.render(this);
+
+      /*
+      this.scene.for_each(gnode2 => {
+        if( gnode == gnode2 ) return;
+        if( gnode instanceof Poly && gnode2 instanceof Poly ) {
+          let ips = gnode.intersect(gnode2);
+          ips.forEach(p => {
+            ctx.strokeStyle = '#f00';
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+            ctx.closePath();
+            ctx.stroke();
+          })
+        }
+      });
+      */
+
     });
   }
 

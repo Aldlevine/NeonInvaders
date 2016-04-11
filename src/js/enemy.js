@@ -1,9 +1,9 @@
 import * as C from "./constants";
 import Vec2 from "./vec2";
 import Shot from "./shot";
-import Poly from "./poly";
+import RigidBody from "./rigid-body";
 
-export default class Enemy extends Poly {
+export default class Enemy extends RigidBody {
   constructor() {
     super();
     // M-24 0 L24 0 L24 2 L24 14 L20 14 L20 4 L4 10 L2 20 L0 20 L-2 20 L-4 10 L-20 4 L-20 14 L-24 14 L-24 2 Z
@@ -40,18 +40,10 @@ export default class Enemy extends Poly {
           app.scene.remove_child(node);
           this.hit(10);
         }
-        /*ctx.save();
-        ctx.translate( this.position.x, this.position.y );
-        gfx.scale();
-        if( ctx.isPointInPath(this.path, node.position.x, node.position.y) ) {
-          app.scene.remove_child(node);
-          this.hit(10);
-        }
-        ctx.restore();*/
-
       }
     });
     // AI Stuff
+    this.rotation += Math.PI / 200;
   }
 
 

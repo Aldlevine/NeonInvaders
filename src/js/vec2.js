@@ -96,4 +96,16 @@ export default class Vec2 {
     return new Vec2(a.x - b.x, a.y - b.y);
   }
   subtract(b) { return this.constructor.subtract(this, b); }
+
+  static rotate(v, r) {
+    let s = Math.sin(r);
+    let c = Math.cos(r);
+    return new Vec2( v.x * c - v.y * s, v.x * s + v.y * c );
+  }
+  rotate(r) { return this.constructor.rotate(this, r); }
+
+  static transform(v, t) {
+    return v.scale( t.scale * (t.hidpi_scale || 1) ).rotate(t.rotation).add(t.position);
+  }
+  transform(t) { return this.constructor.transform(this, t); }
 }

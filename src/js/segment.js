@@ -32,8 +32,8 @@ export default class Segment {
   static is_point_on_segment(s, v) {
     return this.is_point_on_line(s, v) &&
     (
-      ((s.a.x <= v.x && v.x <= s.b.x) && (s.a.y <= v.y && v.y <= s.b.y)) ||
-      ((s.a.x >= v.x && v.x >= s.b.x) && (s.a.y >= v.y && v.y >= s.b.y))
+      ((s.a.x <= v.x && v.x <= s.b.x) || (s.a.x >= v.x && v.x >= s.b.x)) &&
+      ((s.a.y <= v.y && v.y <= s.b.y) || (s.a.y >= v.y && v.y >= s.b.y))
     );
   }
   is_point_on_segment(v) { return this.constructor.is_point_on_segment(this, v); }
@@ -76,10 +76,16 @@ export default class Segment {
 
   static intersect_seg_seg(a, b) {
     let ip = this.intersect_line_line(a, b);
-    if( ip && this.is_point_on_segment(a, ip) && this.is_point_on_segment(b, ip) )
+    if( ip && this.is_point_on_segment(a, ip) && this.is_point_on_segment(b, ip) ) {
       return ip;
+    }
     return null;
   }
   intersect_seg_seg(b) { return this.constructor.intersect_seg_seg(this, b); }
+
+  static transform(s, t) {
+    return new s.constructor(s.a.transform(t), s.b.transform(t));
+  }
+  transform(t) { return this.constructor.transform(this, t); }
 
 }

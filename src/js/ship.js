@@ -1,9 +1,9 @@
 import * as C from "./constants";
 import Vec2 from "./vec2";
 import Shot from "./shot";
-import Poly from "./poly";
+import RigidBody from "./rigid-body";
 
-export default class Ship extends Poly {
+export default class Ship extends RigidBody {
   constructor() {
     super();
     this.line_width = 2;
@@ -27,11 +27,11 @@ export default class Ship extends Poly {
         this.shot_clock -= this.shot_interval;
         if( this.shot_clock < 0 ) this.shot_clock = 0;
 
-        let shot = new Shot(
-          this.position.clone(),
-          new Vec2(0, C.SHIP_SHOT_SPEED),
-          'hsl(225, 100%, 75%)'
-        );
+        let shot = new Shot({
+          position: this.position.clone(),
+          velocity: new Vec2(0, C.SHIP_SHOT_SPEED),
+          fill_style: 'hsl(225, 100%, 75%)'
+        });
         app.scene.add_child(shot);
 
         this.shot_clock += dt;

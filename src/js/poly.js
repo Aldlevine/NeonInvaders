@@ -4,7 +4,8 @@ import Vec2 from "./vec2";
 import Segment from "./segment";
 
 export default class Poly extends Renderable {
-  /*constructor(opts = {}) {
+
+  constructor(opts = {}) {
     super();
     this.points = opts.points || [];
     this.position = opts.position || new Vec2();
@@ -13,31 +14,9 @@ export default class Poly extends Renderable {
     // TODO: Update to include backing store size
     this.hidpi_scale = window.devicePixelRatio || 1;
 
-    this.fill_style = opts.fillStyle || null;
-    this.stroke_style = opts.strokeStyle || null;
-    this.line_width = opts.lineWidth || 0;
-
-    this.path = new Path2D();
-    this.update_path();
-  }*/
-  constructor({
-    points = [],
-    position = new Vec2(),
-    rotation = 0,
-    scale = 1,
-    fill_style = null,
-    stroke_style = null,
-    line_width = null,
-  } = {}) {
-    super();
-    this.points = points;
-    this.position = position;
-    this.rotation = rotation;
-    this.scale = scale;
-    this.hidpi_scale = window.devicePixelRatio || 1;
-    this.fill_style = fill_style;
-    this.stroke_style = stroke_style;
-    this.line_width;
+    this.fill_style = opts.fill_style || null;
+    this.stroke_style = opts.stroke_style || null;
+    this.line_width = opts.line_width || null;
 
     this.path = new Path2D();
     this.update_path();
@@ -54,18 +33,6 @@ export default class Poly extends Renderable {
     }
   }
 
-  get transformed() {
-
-    let points = [];
-    this.points.forEach( point => {
-      // TODO: Rotate
-      points.push( point.scale(this.scale * this.hidpi_scale).add(this.position) );
-    });
-
-    let poly = new this.constructor(this);
-    poly.points = points;
-    return poly;
-  }
 
   get segments() {
     let segments = [];
@@ -78,12 +45,12 @@ export default class Poly extends Renderable {
   }
 
   static intersect(a, b) {
-    let a_segs = a.transformed.segments;
-    let b_segs = b.transformed.segments;
+    let a_segs = a.segments;
+    let b_segs = b.segments;
     let ips = [];
-    a_segs.forEach( a => {
-      b_segs.forEach( b => {
-        let ip = Segment.intersect_seg_seg(a, b);
+    a_segs.forEach( a_seg => {
+      b_segs.forEach( b_seg => {
+        let ip = Segment.intersect_seg_seg(a_seg.transform(a), b_seg.transform(b));
         if ( ip ) ips.push(ip);
       });
     });
@@ -100,10 +67,19 @@ export default class Poly extends Renderable {
     ctx.fillStyle = this.fill_style;
     ctx.save();
     ctx.translate( this.position.x, this.position.y );
-    // TODO: Rotate
+    ctx.rotate( this.rotation );
     ctx.scale( this.scale * this.hidpi_scale, this.scale * this.hidpi_scale );
     if( this.stroke_style ) ctx.stroke(this.path);
     if( this.fill_style ) ctx.fill(this.path);
     ctx.restore();
+
+    /*this.points.forEach(point => {
+      let t = point.transform(this);
+      ctx.strokeStyle = '#f00';
+      ctx.beginPath();
+      ctx.arc(t.x, t.y, 2, 0, Math.PI*2);
+      ctx.closePath();
+      ctx.stroke();
+    });*/
   }
 }
